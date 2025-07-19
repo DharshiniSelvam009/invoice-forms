@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A & A Supplyer - Invoice Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    .invoice-box {
+      max-width: 800px;
+      border: 1px solid #000;
+      padding: 20px;
+    }
+    .heading {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .sub-heading {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .right {
+      text-align: right;
+    }
+    input[type="text"], input[type="number"], input[type="date"], textarea {
+      width: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .total-box {
+      margin-top: 10px;
+      width: 100%;
+    }
+    .total-box td {
+      padding: 5px;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="invoice-box">
+  <div class="heading">A & A Supplyer</div>
+  <div class="sub-heading">
+    Plot No. 16A, A&A Villa, Akash Nagar, Gerugambakkam, Chennai - 600 128<br>
+    GSTIN: 33BTNPS9921H1Z5 | Cell: 8939998989
+  </div>
+
+  <table>
+    <tr>
+      <td>Date: <input type="date"></td>
+    </tr>
+    <tr>
+      <td>M/S: <input type="text"></td>
+    </tr>
+    <tr>
+      <td>Party's GSTIN: <input type="text"></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>D.C No.</th>
+      <th>PARTICULARS</th>
+      <th>Qty</th>
+      <th>Rate</th>
+      <th>Amount</th>
+    </tr>
+    <tr>
+        <td><textarea rows="4" style="width: 100%; border: none; resize: vertical; font-size: 14px; padding: 6px;"></textarea></td>
+        <td><textarea rows="6" style="width: 100%; border: none; resize: vertical; font-size: 14px; padding: 6px;"></textarea></td>
+        <td><input type="number" class="qty" oninput="calculateTotal()"></td>
+        <td><input type="number" class="rate" oninput="calculateTotal()"></td>
+        <td><input type="number" class="amount" readonly></td>
+    </tr>
+
+
+  </table>
+
+  <table class="total-box">
+    <tr>
+      <td class="right bold">TOTAL:</td>
+      <td><input type="number" id="total" readonly></td>
+    </tr>
+    <tr>
+      <td class="right">CGST 2.5%:</td>
+      <td><input type="number" id="cgst" readonly></td>
+    </tr>
+    <tr>
+      <td class="right">SGST 2.5%:</td>
+      <td><input type="number" id="sgst" readonly></td>
+    </tr>
+    <tr>
+      <td class="right bold">GRAND TOTAL:</td>
+      <td><input type="number" id="grand" readonly></td>
+    </tr>
+  </table>
+
+  <div class="footer">
+    <div>Rupees in Words: <input type="text" style="width: 100%;"></div>
+    <br><br>
+    <div class="right bold">For A & A Supplyer<br><br>_________________<br>Proprietor</div>
+  </div>
+</div>
+
+<script>
+  function calculateTotal() {
+    const qty = document.querySelector('.qty').value;
+    const rate = document.querySelector('.rate').value;
+    const amountField = document.querySelector('.amount');
+
+    const amount = (qty && rate) ? (parseFloat(qty) * parseFloat(rate)) : 0;
+    amountField.value = amount.toFixed(2);
+
+    document.getElementById("total").value = amount.toFixed(2);
+    const cgst = amount * 0.025;
+    const sgst = amount * 0.025;
+    document.getElementById("cgst").value = cgst.toFixed(2);
+    document.getElementById("sgst").value = sgst.toFixed(2);
+    document.getElementById("grand").value = (amount + cgst + sgst).toFixed(2);
+  }
+</script>
+
+</body>
+</html>
